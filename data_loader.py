@@ -33,3 +33,21 @@ SALES DATA SUMMARY:
 - Unique Regions: {summary['unique_regions']}
 """
     return context
+
+def create_sample_data() -> str:
+    sample_file = "sample_sales_data.csv"
+    sample_data = """date,product,region,revenue,quantity,customer_type
+2024-09-01,Product A,North,15000,50,SMB
+2024-09-01,Product C,South,22000,35,Enterprise
+2024-09-02,Product A,South,18000,60,SMB
+2024-09-02,Product B,North,12000,40,SMB
+2024-09-03,Product C,East,25000,30,Enterprise
+2024-09-03,Product A,West,14000,45,SMB
+2024-09-04,Product B,South,16000,50,Enterprise
+2024-09-04,Product C,North,28000,32,Enterprise
+2024-09-05,Product A,East,13000,55,SMB
+2024-09-05,Product B,West,11000,35,SMB"""
+
+    with open(sample_file, 'w', encoding='utf-8') as f:
+        f.write(sample_data)
+    return sample_file
