@@ -7,18 +7,24 @@ def load_sales_data(filepath: str) -> List[Dict]:
         return list(reader)
 
 def calculate_summary(data: List[Dict]) -> Dict:
-    total_revenue = sum(float(row.get('revenue', 0)) for row in data)
-    total_quantity = sum(int(row.get('quantity', 0)) for row in data)
+    total_revenue = 0.0
+    total_quantity = 0
+
+    for row in data:
+        try:
+            total_revenue += float(row.get('revenue', 0))
+            total_quantity += int(row.get('quantity', 0))
+        except (ValueError, TypeError):
+            continue
+
     num_records = len(data)
-    unique_products = len(set(row.get('product') for row in data))
-    unique_regions = len(set(row.get('region') for row in data))
 
     return {
         'total_revenue': total_revenue,
         'total_quantity': total_quantity,
         'num_records': num_records,
-        'unique_products': unique_products,
-        'unique_regions': unique_regions,
+        'unique_products': len(set(row.get('product') for row in data)),
+        'unique_regions': len(set(row.get('region') for row in data)),
         'avg_transaction': total_revenue / num_records if num_records > 0 else 0,
     }
 
