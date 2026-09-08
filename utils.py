@@ -6,5 +6,5 @@ def ensure_file_exists(filepath):
         raise FileNotFoundError(f"File not found: {filepath}")
 
 def validate_api_key():
-    if not os.environ.get('ANTHROPIC_API_KEY'):
-        raise ValueError("ANTHROPIC_API_KEY environment variable not set")
+    if not os.environ.get('DEEPSEEK_API_KEY'):
+        raise ValueError("DEEPSEEK_API_KEY environment variable not set")

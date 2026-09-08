@@ -2,26 +2,32 @@
 import os
 import sys
 import argparse
-import anthropic
 from pathlib import Path
+from openai import OpenAI
 from data_loader import load_sales_data, create_sample_data, calculate_summary, format_data_for_agent
 from report import generate_report
+
+DEEPSEEK_BASE_URL = "https://api.deepseek.com"
+MODEL = "deepseek-flash"
 
 SYSTEM_PROMPT = """You are an Executive Sales Intelligence Agent. Focus on actionable insights for business leaders."""
 
 def run_agent(data_context: str) -> str:
     try:
-        client = anthropic.Anthropic(api_key=os.environ.get('ANTHROPIC_API_KEY'))
-        if not os.environ.get('ANTHROPIC_API_KEY'):
-            raise ValueError("ANTHROPIC_API_KEY not set")
+        api_key = os.environ.get('DEEPSEEK_API_KEY')
+        if not api_key:
+            raise ValueError("DEEPSEEK_API_KEY not set")
 
-        message = client.messages.create(
-            model="claude-opus-4-6",
+        client = OpenAI(api_key=api_key, base_url=DEEPSEEK_BASE_URL)
+        response = client.chat.completions.create(
+            model=MODEL,
             max_tokens=1500,
-            system=SYSTEM_PROMPT,
-            messages=[{"role": "user", "content": f"Analyze this: {data_context}"}]
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": f"Analyze this: {data_context}"},
+            ],
         )
-        return message.content[0].text
+        return response.choices[0].message.content
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
         raise
