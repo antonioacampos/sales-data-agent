@@ -15,7 +15,7 @@ model.
 
 ```bash
 pip install -r requirements.txt
-export ANTHROPIC_API_KEY=...
+export DEEPSEEK_API_KEY=...
 python agent.py --demo
 ```
 
@@ -25,6 +25,12 @@ python agent.py --demo
 python agent.py --data sales.csv --output report.md
 ```
 
+## Backend
+
+Started on Claude through the Anthropic SDK. Moved to DeepSeek in September 2026
+- the context block is small, and DeepSeek is much cheaper per token for this
+kind of workload. The call is OpenAI-compatible, see run_agent() in agent.py.
+
 ## Docs
 
 - [USAGE_EXAMPLES.md](USAGE_EXAMPLES.md)
@@ -33,7 +39,7 @@ python agent.py --data sales.csv --output report.md
 
 ## Requirements
 
-Python 3.10+ and an Anthropic API key.
+Python 3.10+ and a DeepSeek API key.
 
 ## License
 

@@ -31,6 +31,6 @@ to be exported in the crontab line itself:
 
 When it fails:
 
-- `ANTHROPIC_API_KEY not set` - the key is not in the environment, see .env.example
+- `DEEPSEEK_API_KEY not set` - the key is not in the environment, see .env.example
 - `Data file not found` - paths are relative to the cwd
 - `No data found in file` - the CSV has a header but no rows
